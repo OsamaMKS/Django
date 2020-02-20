@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} My List {% endblock title %}
+
+{% block content %}
+
+  <!-- {%if request.user.is_authenticated %} -->
+      <br>
+      <div class="row">
+        {% for wishlist in wishlists %}
+        <div class="col-md-4">
+            <div class="card my-card">
+              {% if wishlist.logo %}
+                <img class="card-img-top" src="{{wishlist.logo.url}}" alt="Hey Noob, look at me..." style="width: 100%;height: 15vw;object-fit: cover;" >
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{wishlist.name}}</h5>
+                <p class="card-text">{{wishlist.description}}</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center">
+                  <a href="{% url 'item-list' wishlist.id  %}" class="btn btn-outline-dark">View Item</a>
+                </li>
+              </ul>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    <!-- {% else %}
+    <h1>Oops! You need to sign in to view your Wishlist!</h1>
+    <h4>Redirecting...</h4>
+    <meta http-equiv="refresh" content="3;{% url 'signin' %}" method="POST" />
+    {%endif%} -->
+
+{% endblock content %}

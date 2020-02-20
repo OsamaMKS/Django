@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Wish List{% endblock title %}
+
+{% block content %}
+
+<br>
+<div class="card">
+  <h5 class="card-header">Wishlist Info</h5>
+  {% if wishlist.logo %}
+    <img class="card-img-top" src="{{wishlist.logo.url}}" alt="Hey Noob, look at me...">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{wishlist.name}}</h5>
+    <p class="card-text">{{wishlist.description|linebreaks}}</p>
+    </div>
+  <div class="card-body">
+    <h5 class="card-title"> Items</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for item in items %}
+      <li class="list-group-item">
+        {% if item.logo %}
+          <img class="card-img-top" src="{{item.logo.url}}" alt="Hey Noob, look at me..." style="width: 100%;height: 15vw;object-fit: cover;">
+        {% endif %}
+        <p><b>{{item.name}}</b></p>
+        <p>{{item.description|linebreaks}}</p>
+        <p>{{item.price}} JOD</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="card-body">
+    <div class="row text-center">
+
+        {% if request.user.is_staff %}
+            <div class="col-md-4">
+                <a href="{% url 'list-delete' list.id %}" class="btn btn-outline-danger btn-block">Delete</a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'list-update' list.id %}" class="btn btn-outline-primary btn-block">Update</a>
+            </div>
+
+        {% else %}
+
+          {% if request.user == user.owner %}
+
+          <div class="col-md-4">
+              <a href="{% url 'list-update' list.id %}" class="btn btn-outline-primary btn-block">Update</a>
+          </div>
+
+          <div class="col-md-4">
+              <a href="{% url 'item-create' list.id %}" class="btn btn-outline-success btn-block">Add Item</a>
+          </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'list-delete' list.id %}" class="btn btn-outline-danger btn-block">Delete</a>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

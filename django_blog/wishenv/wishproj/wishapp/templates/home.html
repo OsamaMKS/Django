@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}WishList Home{% endblock title %}
+
+{% block content %}
+<br>
+<div class="text-center">
+  <div class="jumbotron" >
+  <h1 class="display-4">
+    Hey NOOB!
+  </h1>
+  <hr class="my-4">
+  <p>Welcome to wishlist, a simple website for keeping the items you love and want to get!</p>
+  <a class="btn btn-info btn-outline-danger btn-lg" href="{% url 'signin' %}" role="button">Start Your List!</a>
+</div>
+</div>
+{% endblock content %}
+
+
+
+
+ <!--<button type="button" class="btn btn-info btn-outline-danger btn-lg">Start Your List!</button>-->
+
+ <a class="btn btn-info btn-outline-danger btn-lg" href="signin.html" role="button">Start Your List!</a>

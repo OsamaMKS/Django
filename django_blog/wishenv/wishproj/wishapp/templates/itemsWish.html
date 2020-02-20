@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} My List {% endblock title %}
+
+{% block content %}
+
+  {%if request.user.is_authenticated %}
+      <br>
+      <div class="row">
+          <a href="{% url 'item-create' list.id %}"  class="btn btn-outline-danger btn-block"">Add Item</a>
+        {% for item in items %}
+        <div class="col-md-4">
+            <div class="card my-card">
+              {% if item.logo %}
+                <img class="card-img-top" src="{{ item.logo.url }}" alt="Hey Noob, look at me..." style="width: 100%;height: 15vw;object-fit: cover;">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{item.name}}</h5>
+                <a class="nav-link" href="{{ item.link }}" target="_blank">Buy It</a>
+                <!-- <p class="card-text">{{item.link}}</p> -->
+              </div>
+            </div>
+
+
+
+
+            {% if request.user.is_staff %}
+
+          <div class="col-md-4">
+              <a href="{% url 'list-delete' list.id %}" class="btn btn-outline-danger btn-block">Delete</a>
+              <a href="{% url 'item-create' item.id %}"  class="btn btn-outline-danger btn-block"">Add Item</a>
+          </div>
+
+      {% else %}
+
+        {% if request.user == user.owner %}
+
+          <div class="col-md-4">
+              <a href="{% url 'list-delete' list.id %}" class="btn btn-outline-danger btn-block">Delete</a>
+              <a href="{% url 'item-create' list.id %}"  class="btn btn-outline-danger btn-block"">Add Item</a>
+          </div>
+
+
+          {% endif %}
+      {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+    <h1>Oops! You need to sign in to view your Wishlist!</h1>
+    <h4>Redirecting...</h4>
+    <meta http-equiv="refresh" content="3;{% url 'signin' %}" method="POST" />
+    {%endif%}
+
+{% endblock content %}
